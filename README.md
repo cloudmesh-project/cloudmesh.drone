@@ -5,16 +5,32 @@ Crazyflie Drivers/Client Install
 -----------------------------------------
 (https://github.com/bitcraze/crazyflie-clients-python/blob/develop/README.md) 
 
-- Install cflib https://github.com/bitcraze/crazyflie-lib-python (‘pip3 install cflib’ seems to work)
-- Modify group settings to access USB radio without root:
+Install cflib:
 
-	- echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="1915", ATTRS{idProduct}=="7777", MODE="0664", GROUP="plugdev"' | sudo tee /etc/udev/rules.d/99-crazyradio.rules 
+	pip3 install cflib
 	
-	- echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0664", GROUP="plugdev"' | sudo tee /etc/udev/rules.d/99-crazyflie.rules
+You can also use local files from https://github.com/bitcraze/crazyflie-lib-python for development
 	
-- Install crazyflie client https://github.com/bitcraze/crazyflie-clients-python/tree/develop
+Modify group settings to access USB radio without root:
 
-- Client can now be run system-wide with ‘cfclient’
+	echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="1915", ATTRS{idProduct}=="7777", MODE="0664", GROUP="plugdev"' | sudo tee /etc/udev/rules.d/99-crazyradio.rules 
+	
+	echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0664", GROUP="plugdev"' | sudo tee /etc/udev/rules.d/99-crazyflie.rules
+	
+Clone git repo:
+
+	git clone https://github.com/bitcraze/crazyflie-clients-python.git
+	cd crazyflie-clients-python
+	
+Install dependencies:
+
+	sudo apt-get install python3 python3-pip python3-pyqt5
+
+Install client:
+
+	pip3 install -e .
+	
+Client can now be run system-wide with ‘cfclient’
  
 Using cflclient:
 --------------------
@@ -57,11 +73,26 @@ Flash firmware for loco positioning node
 -------------------------------------
 (https://github.com/bitcraze/lps-node-firmware)
 
-- git clone https://github.com/bitcraze/lps-node-firmware.git
-- cd lps-node-firmware
-- git submodule init
-- git submodule update
-- make
-- sudo apt-get install dfu-util
-- Plug node into usb while holding DFU button, should be constant blue light
-- sudo make dfu
+Clone git repo:
+
+	git clone https://github.com/bitcraze/lps-node-firmware.git
+	cd lps-node-firmware
+	
+Initiate/update submodules:
+
+	git submodule init
+	git submodule update
+	
+Make sure dfu-util is installed:
+
+	sudo apt-get install dfu-util
+	
+Run make:
+
+	make
+	
+Plug node into usb while holding DFU button, should be constant blue light
+
+Run make command for dfu (sudo may be necessary):
+
+	sudo make dfu
