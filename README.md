@@ -3,7 +3,7 @@ Crazyflie (Ubuntu 16.04):
  
 Crazyflie Drivers/Client Install
 -----------------------------------------
-(https://github.com/bitcraze/crazyflie-clients-python/blob/develop/README.md) 
+(https://github.com/bitcraze/crazyflie-clients-python) 
 
 Install cflib:
 
@@ -48,6 +48,7 @@ Install ROS
 - Install ROS http://www.ros.org/install(~2.5GB)
 - Install catkin http://wiki.ros.org/catkin#Installing_catkin 
 - Create catkin workspace http://wiki.ros.org/catkin/Tutorials/create_a_workspace 
+
 *note: make sure to be consistent with the version of ROS you chose to install (lunar, kinetic, etc)
  
 Install Crazyflie ROS packages
@@ -59,7 +60,7 @@ Install Crazyflie ROS packages
 
 Flash firmware for crazyflie
 -----------------------------------
-(https://wiki.bitcraze.io/doc:crazyflie:client:pycfclient:index#bootloader):
+(https://wiki.bitcraze.io/doc:crazyflie:client:pycfclient:index):
 
 - Connect crazyflie via usb, power on crazyflie into debug mode by holding power button for 3 seconds
 - Start cfclient (do not connect crazyflie in cfclient)
