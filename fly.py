@@ -12,22 +12,22 @@ from cflib.crazyflie.log import LogConfig
 
 class Drone:
     channel = 80
-    bandwidth = 250
+    bandwidth = '250K'
     
     # commands per second, 100 is recommended (1 every 10ms)
     precision = 100
     
     # + right, - left
-    roll = -1
+    roll = 0
     # + forward, - backward
-    pitch = 1.2
+    pitch = 0
     yawrate = 0
     # 10001 - 65000
     thrust = 0
     
     def __init__(self):        
         cflib.crtp.init_drivers(enable_debug_driver = False)
-        uri = 'radio://0/{}/{}K'.format(self.channel, self.bandwidth)
+        uri = 'radio://0/{}/{}'.format(self.channel, self.bandwidth)
         self.connect(uri)
         
     def _connected(self, link_uri):
@@ -37,13 +37,13 @@ class Drone:
         self.send_setpoint(0, 0, 0, 0)
         
         # position printing
-        '''log_conf = LogConfig(name='Position', period_in_ms=500)
+        log_conf = LogConfig(name='Position', period_in_ms=500)
         log_conf.add_variable('kalman.stateX', 'float')
         log_conf.add_variable('kalman.stateY', 'float')
         log_conf.add_variable('kalman.stateZ', 'float')
         self.cf.log.add_config(log_conf)
         log_conf.data_received_cb.add_callback(self.position_callback)
-        log_conf.start()'''
+        log_conf.start()
 
         # Start a separate thread to do the motor test.
         # Do not hijack the calling thread!        
@@ -75,9 +75,9 @@ class Drone:
         
         self.cf.open_link(uri)
         
-    def position_callback(timestamp, data, logconf):
+    def position_callback(self, timestamp, data, logconf):
         '''Callback for position printing
-        '''
+        '''        
         x = data['kalman.stateX']
         y = data['kalman.stateY']
         z = data['kalman.stateZ']
@@ -87,7 +87,10 @@ class Drone:
         '''Sandbox for testing fly commands
         '''
         self.send_setpoint(thrust = 10001)
-        self.increase_thrust_to(32000)
+        self.increase_thrust_to(35500)
+        self.hold_for(1)
+        self.decrease_thrust_to(35450, 50)
+        self.hold_for(1)
         self.decrease_thrust_to(10001, 50)
         
         self.cf.close_link()
