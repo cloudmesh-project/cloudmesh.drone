@@ -55,6 +55,8 @@ Install Crazyflie ROS packages
 - cd into catkin workspace src folder 'cd ~/catkin_ws/src'
 - clone git files: 'git clone https://github.com/whoenig/crazyflie_ros.git' *(may need to move files from crazyflie_ros folder to src folder)
 
+install:
+
     cd ~/catkin_ws
     catkin_make
     catkin_make install
