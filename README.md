@@ -14,7 +14,6 @@ You can also use local files from https://github.com/bitcraze/crazyflie-lib-pyth
 Modify group settings to access USB radio without root:
 
 	echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="1915", ATTRS{idProduct}=="7777", MODE="0664", GROUP="plugdev"' | sudo tee /etc/udev/rules.d/99-crazyradio.rules 
-	
 	echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE="0664", GROUP="plugdev"' | sudo tee /etc/udev/rules.d/99-crazyflie.rules
 	
 Clone git repo:
@@ -30,7 +29,7 @@ Install client:
 
 	pip3 install -e .
 	
-Client can now be run system-wide with ‘cfclient’
+Client can now be run system-wide with 'cfclient'
  
 Using cflclient:
 --------------------
@@ -53,10 +52,13 @@ Install ROS
  
 Install Crazyflie ROS packages
 ------------------------------------------
-- cd into catkin workspace src folder ‘cd ~/catkin_ws/src’
-- clone git files: ‘git clone https://github.com/whoenig/crazyflie_ros.git’ *(may need to move files from crazyflie_ros folder to src folder)
-- cd into workspace ‘cd ~/catkin_ws’
-- 'catkin_make'
+- cd into catkin workspace src folder 'cd ~/catkin_ws/src'
+- clone git files: 'git clone https://github.com/whoenig/crazyflie_ros.git' *(may need to move files from crazyflie_ros folder to src folder)
+
+    cd ~/catkin_ws
+    catkin_make
+    catkin_make install
+    source ./devel/setup.bash
 
 Flash firmware for crazyflie
 -----------------------------------
@@ -65,10 +67,10 @@ Flash firmware for crazyflie
 - Connect crazyflie via usb, power on crazyflie into debug mode by holding power button for 3 seconds
 - Start cfclient (do not connect crazyflie in cfclient)
 - Choose configure -> bootloader
-- Click “initiate bootloader cold boot”
+- Click "initiate bootloader cold boot"
 - Choose firmware .zip (download https://github.com/bitcraze/crazyflie-release/releases) (*need zalman for LOCO positioning)
-- Click “program”
-- Click “restart in firmware mode”
+- Click "program"
+- Click "restart in firmware mode"
  
 Flash firmware for loco positioning node
 -------------------------------------
