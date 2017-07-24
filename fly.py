@@ -21,6 +21,7 @@ class Drone:
     roll = 0
     # + forward, - backward
     pitch = 0
+    # rotation rate
     yawrate = 0
     # 10001 - 65000
     thrust = 0
