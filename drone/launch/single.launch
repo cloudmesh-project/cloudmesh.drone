@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="uri" default="radio://0/80/250K/0xE7E7E7E7E7" />
+    <arg name="frame" default="/tf" />
+    
+    <include file="$(find crazyflie_driver)/launch/crazyflie_server.launch">
+    </include>
+
+    <include file="$(find crazyflie_driver)/launch/crazyflie_add.launch">
+        <arg name="uri" value="$(arg uri)" />
+        <arg name="tf_prefix" value="crazyflie" />
+        <arg name="enable_logging" value="True" />
+    </include>
+    
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find crazyflie_demo)/launch/crazyflie.rviz" />
+    
+    <node pkg="tf" type="static_transform_publisher" name="baselink_broadcaster" args="0 0 0 0 0 0 1 $(arg frame) /crazyflie/base_link 100" />
+</launch>

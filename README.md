@@ -60,7 +60,7 @@ install:
     cd ~/catkin_ws
     catkin_make
     catkin_make install
-    source ./devel/setup.bash
+    source devel/setup.bash
 
 Flash firmware for crazyflie
 -----------------------------------
@@ -68,7 +68,7 @@ Flash firmware for crazyflie
 
 - Connect crazyflie via usb, power on crazyflie into debug mode by holding power button for 3 seconds
 - Start cfclient (do not connect crazyflie in cfclient)
-- Choose configure -> bootloader
+- Choose connect -> bootloader
 - Click "initiate bootloader cold boot"
 - Choose firmware .zip (download https://github.com/bitcraze/crazyflie-release/releases) (*need zalman for LOCO positioning)
 - Click "program"
