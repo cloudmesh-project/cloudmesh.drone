@@ -101,3 +101,55 @@ Plug node into usb while holding DFU button, should be constant blue light
 Run make command for dfu (sudo may be necessary):
 
 	sudo make dfu
+	
+Using ROS with Crazyflie:
+-------------------------
+In order to use ROS, you will need to first have a catkin workspace setup. Our ROS script will create a Publisher, which published to /crazyflie/cmd_vel (command velocity) to issue commands to the Crazyflie. In turn, our script will subscrive to various nodes that the crazyflie drivers create, such as /crazyflie/imu for sensor information and /crazyflie/pose for positioning information with the loco script.
+
+All scripts require the catkin source:
+
+    cd ~/catkin_ws
+    source devel/setup.bash
+
+The first task it to start the ROS core:
+
+    roscore
+    
+Next, use the appropriate launch script, and provide the uri "roslaunch (package) (launch script) *(options)":
+
+    roslaunch drone single.launch uri:=radio://0/80/250K
+    
+You should see all of the current topics being published:
+
+    rostopic list
+    
+You can echo a topic to receive information from it
+
+    rostopic echo /crazyflie/imu
+    
+To run a script do "rosrun (package) (script)":
+
+    rosrun drone test.py
+    
+Crazyflie and ROS
+-----------------
+
+One ROS, the crazyflie receives commands from on the /crazyflie/cmd_vel topic. The format for commands is "Twist". The Twist command receives two vectors, the first with linear acceleration and the second with angular velocity.
+
+In Python:
+
+    from geometry_msgs.msg import Twist, Vector3
+    Twist(Vector3(pitch, roll, thrust), Vector3(_, _, yaw))
+    
+Crazyflie Issues
+----------------
+
+The Crazyflie firmware behaves as if the drone is being controlled with a joystick. Therefore, the first value sent should be all zeroes, or the drone will not respond to any commands. If there is any break in the input (such as the drone landing, then taking off later), the zero values will have to be sent again.
+
+Python:
+
+    cf.commander.send_setpoint(0, 0, 0, 0)
+    
+ROS (use empty Twist):
+
+    publisher.publish(Twist())
