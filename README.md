@@ -150,6 +150,6 @@ Python:
 
     cf.commander.send_setpoint(0, 0, 0, 0)
     
-ROS (use empty Twist):
+ROS Python (use empty Twist):
 
     publisher.publish(Twist())
